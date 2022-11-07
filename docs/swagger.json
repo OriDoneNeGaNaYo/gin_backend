@@ -1,0 +1,17 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "This is a sample server Petstore server.",
+        "title": "우리동네가나요 API",
+        "termsOfService": "http://swagger.io/terms/",
+        "contact": {
+            "name": "API Support",
+            "url": "http://www.swagger.io/support",
+            "email": "support@swagger.io"
+        },
+        "version": "1.0"
+    },
+    "host": "oridongnaeganayo.swagger.io",
+    "basePath": "/api/v1",
+    "paths": {}
+}
