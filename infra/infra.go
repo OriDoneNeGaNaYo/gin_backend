@@ -13,7 +13,7 @@ type Database struct {
 	DB *gorm.DB
 }
 
-func NewDatabase() Database {
+func newDatabase() Database {
 	USER := os.Getenv("DB_USER")
 	PASS := os.Getenv("MYSQL_ROOT_PASSWORD")
 	HOST := os.Getenv("DB_HOST")
@@ -25,18 +25,21 @@ func NewDatabase() Database {
 
 	if err != nil {
 		panic("Failed to connect to database!")
-
 	}
 	fmt.Println("Database connection established")
 	return Database{
 		DB: db,
 	}
-
 }
 
-func LoadEnv() {
+func loadEnv() {
 	err := godotenv.Load(".env")
 	if err != nil {
 		log.Fatalf("unable to load .env file")
 	}
+}
+
+func GetDB() Database {
+	loadEnv()
+	return newDatabase()
 }
