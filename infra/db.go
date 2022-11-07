@@ -2,10 +2,8 @@ package infra
 
 import (
 	"fmt"
-	"github.com/joho/godotenv"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
-	"log"
 	"os"
 )
 
@@ -32,14 +30,7 @@ func newDatabase() Database {
 	}
 }
 
-func loadEnv() {
-	err := godotenv.Load(".env")
-	if err != nil {
-		log.Fatalf("unable to load .env file")
-	}
-}
-
 func GetDB() Database {
-	loadEnv()
+	LoadEnv()
 	return newDatabase()
 }

@@ -4,12 +4,14 @@ import (
 	"database/sql"
 	"gin_backend/infra"
 	"github.com/gin-gonic/gin"
+	"github.com/linkedin/goavro"
 	"gorm.io/gorm"
 	"log"
 	"net/http"
 )
 
 var db = infra.GetDB()
+var writer infra.Writer
 var err error
 
 type nodes struct {
@@ -34,6 +36,7 @@ func getNodes(c *gin.Context) {
 		_ = c.AbortWithError(http.StatusNotFound, err)
 		log.Fatalf(err.Error())
 	} else {
+		getKafka()
 		c.JSON(http.StatusOK, n)
 	}
 }
@@ -46,4 +49,17 @@ func getNode(c *gin.Context) {
 	} else {
 		c.JSON(http.StatusOK, n)
 	}
+}
+
+func getKafka() {
+	log.Println(0)
+	writer.GetKafkaWriter("9091", "bus", 1)
+	log.Println(1)
+	codec := goavro.Codec{}
+	log.Println(2)
+	m := map[string]interface{}{"name": "bus1", "count": 1, "location": "seoul", "user_id": 1}
+	log.Println(3)
+	b, _ := codec.TextualFromNative(nil, m)
+	writer.WriteMessage(b)
+	writer.CloseKafkaWriter()
 }
