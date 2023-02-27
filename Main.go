@@ -1,8 +1,8 @@
 package main
 
 import (
+	busStop "gin_backend/bus-stop"
 	_ "gin_backend/docs"
-	"gin_backend/node"
 	"github.com/gin-gonic/gin"
 	swaggerFiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
@@ -24,7 +24,7 @@ func main() {
 	router := gin.Default()
 	router.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 	v1 := router.Group("/api/v1")
-	node.Config(v1)
+	busStop.Config(v1)
 
 	_ = router.Run(":8080")
 }
