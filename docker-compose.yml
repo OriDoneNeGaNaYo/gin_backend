@@ -1,22 +1,37 @@
 version: "3"
 
-volumes:
-  mysql-volume:
-
 services:
   bus_mysql:
     container_name: bus_mysql
     image: arm64v8/mysql:8.0.30
+    env_file:
+      - .env
     environment:
-      - MYSQL_ROOT_PASSWORD=busdb
       - CHARACTER_SET_SERVER=utf8%
-      - MYSQL_DATABASE=bus
+      - DE_NAME=${DB_NAME}
     command:
       [
         "--character-set-server=utf8mb4",
         "--collation-server=utf8mb4_unicode_ci",
       ]
     volumes:
-      - mysql-volume:/var/lib/${MYSQL_DATABASE}
+      - bus_mysql:/var/lib/${DB_NAME}
     ports:
-      - "3308:3306"
+      - "3306:3306"
+
+  gin_backend:
+    container_name: gin_backend
+    build:
+      context: .
+      dockerfile: Dockerfile
+    env_file:
+      - .env
+    image: gin_backend
+    ports:
+      - "8080:8080"
+    restart: always
+    depends_on:
+      - bus_mysql
+
+volumes:
+  bus_mysql:

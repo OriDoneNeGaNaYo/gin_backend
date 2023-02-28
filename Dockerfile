@@ -1,17 +1,13 @@
-FROM golang:alpine
-
-RUN mkdir /app
+FROM  golang:1.19
 
 WORKDIR /app
 
-ADD go.mod .
-ADD go.sum .
+COPY . .
 
-RUN go mod download
-ADD . .
+RUN go mod download && go mod verify
 
-RUN go get github.com/githubnemo/CompileDaemon
+RUN go build -o app Main.go
 
-EXPOSE 8000
+EXPOSE 8080
 
-ENTRYPOINT CompileDaemon --build="go build main.go" --command=./main
+CMD ["./app"]

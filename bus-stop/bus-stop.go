@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"gin_backend/infra"
 	"github.com/gin-gonic/gin"
-	"github.com/linkedin/goavro"
 	"gorm.io/gorm"
 	"log"
 	"net/http"
@@ -39,7 +38,7 @@ type PaginationQuery struct {
 	Key    string `form:"key" binding:"omitempty"`
 	Page   int    `form:"page" binding:"omitempty,min=0"`
 	Size   int    `form:"size" binding:"omitempty,min=1,max=100"`
-	SortBy string `form:"sort_by" binding:"omitempty,oneof=id city name lati long"`
+	SortBy string `form:"sort_by" binding:"omitempty,oneof=id city name gps_lati gps_long"`
 	Sort   string `form:"sort" binding:"omitempty,oneof=asc desc"`
 }
 
@@ -89,28 +88,4 @@ func getBusStop(c *gin.Context) {
 	} else {
 		c.JSON(http.StatusOK, n)
 	}
-}
-
-func searchBusStops(name string) ([]busStop, error) {
-	var busStops []busStop
-	var chainQuery = db.DB.Where("1 = 0")
-
-	err := chainQuery.Find(&busStops).Error
-	if err != nil {
-		return nil, err
-	}
-
-	return busStops, nil
-}
-
-func getKafka() {
-	codec := goavro.Codec{}
-	log.Println(codec.Schema())
-	//i := goavro.Union("name", "bus1")
-	//m := map[string]interface{}{"name": "bus1", "count": 1, "location": "seoul", "user_id": 1}
-	//b, _ := codec.TextualFromNative(nil, m)
-	//_, b, _ := codec.NativeFromTextual([]byte(`{"name": "bus1", "count": 1, "location": "seoul", "user_id": 1}`))
-	writer.WriteMessage([]byte(`{"name": "bus1", "count": 1, "location": "seoul", "user_id": 1}`))
-	//kafka.AvroProducer{}.GetSchemaId("bus", codec)
-	//writer.CloseKafkaWriter()
 }
