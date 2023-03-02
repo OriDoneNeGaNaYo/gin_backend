@@ -7,7 +7,6 @@ import (
 	"log"
 	"os"
 	"sync"
-	"time"
 )
 
 type Writer struct {
@@ -59,11 +58,9 @@ func (w *Writer) GetKafkaWriter(port string, topic string, partition int) *Write
 }
 
 func (w *Writer) WriteMessage(message []byte) {
-	err = w.conn.SetWriteDeadline(time.Now().Add(time.Second * 10))
-	log.Println(message)
-	_, b, _ := busCodec.NativeFromBinary(message)
-	log.Println(b)
-	_, err = w.conn.Write(b)
+	//err = w.conn.SetWriteDeadline(time.Now().Add(time.Second * 10))
+	//_, b, _ := busCodec.NativeFromTextual(message)
+	_, err = w.conn.Write(message)
 	log.Println("end")
 }
 
@@ -75,5 +72,4 @@ func (w *Writer) CloseKafkaWriter() {
 }
 
 func (r *Reader) GetKafkaReader() {
-
 }

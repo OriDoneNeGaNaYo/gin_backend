@@ -31,7 +31,6 @@ func Config(api *gin.RouterGroup) {
 	_ = db.DB.AutoMigrate(&busStop{})
 	api.GET("/bus-stops", getAllBusStops)
 	api.GET("/bus-stops/:id", getBusStop)
-	//go writer.GetKafkaWriter("9091", "bus", 1)
 }
 
 type PaginationQuery struct {
@@ -82,10 +81,10 @@ func getAllBusStops(c *gin.Context) {
 
 func getBusStop(c *gin.Context) {
 	id := c.Param("id")
-	var n busStop
-	if err = db.DB.Where("id = ?", id).First(&n).Error; err != nil {
+	var data busStop
+	if err = db.DB.Where("id = ?", id).First(&data).Error; err != nil {
 		_ = c.AbortWithError(http.StatusNotFound, err)
 	} else {
-		c.JSON(http.StatusOK, n)
+		c.JSON(http.StatusOK, data)
 	}
 }
