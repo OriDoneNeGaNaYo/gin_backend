@@ -19,4 +19,4 @@
 .DS_Store
 .idea
 /.env
-/command
+/main-server/command

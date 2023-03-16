@@ -2,10 +2,10 @@ package bus_stop
 
 import (
 	"fmt"
-	"gin_backend/infra"
 	"github.com/gin-gonic/gin"
 	"gorm.io/gorm"
 	"log"
+	"main-server/infra"
 	"net/http"
 	"time"
 )

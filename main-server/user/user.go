@@ -1,10 +1,10 @@
 package user
 
 import (
-	"gin_backend/infra"
 	"github.com/gin-gonic/gin"
 	"gorm.io/gorm"
 	"log"
+	infra "main-server/infra"
 	"net/http"
 )
 

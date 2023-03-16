@@ -1,12 +1,11 @@
 package main
 
 import (
-	busStop "gin_backend/bus-stop"
-	_ "gin_backend/docs"
-	"gin_backend/user"
 	"github.com/gin-gonic/gin"
 	swaggerFiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
+	busStop "main-server/bus-stop"
+	"main-server/user"
 )
 
 /* 아래 항목이 swagger에 의해 문서화 된다. */
