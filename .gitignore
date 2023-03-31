@@ -20,3 +20,4 @@
 .idea
 /.env
 /main-server/command
+/data-processing/mysql-connector-j-8.0.32/src/
